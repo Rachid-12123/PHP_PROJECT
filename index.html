@@ -22,6 +22,11 @@
       <link rel="icon" href="images/fevicon.png" type="image/gif" />
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <style>
+         html {
+             scroll-behavior: smooth;
+         }
+      </style>
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -57,13 +62,13 @@
                                <a class="nav-link" href="index.html">Accueil</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="about.html">À propos</a>
+                               <a class="nav-link" href="#about">À propos</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="programmes.html">Programmes</a>
+                               <a class="nav-link" href="#programmes">Programmes</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="inscription.html">Inscription</a>
+                               <a class="nav-link" href="#inscription">Inscription</a>
                            </li>
                            <li class="nav-item">
                                <a class="nav-link" href="contact.html">Contact</a>
@@ -184,7 +189,7 @@
       </div>
       <!-- end banner -->
 <!-- our class -->
-<div class="class">
+<div class="class" id="programmes">
    <div class="container">
        <div class="row">
            <div class="col-md-12">
@@ -236,12 +241,12 @@
 </div>
 <!-- end our class -->
       <!-- about -->
-      <div class="about">
+      <div class="about" id="about">
          <div class="container-fluid">
             <div class="row d_flex">
                <div class="col-md-6">
                   <div class="titlepage text_align_left">
-                     <h2>À propos<br>de notre<br> école</h2>
+                     <h2>Nous Programmes<br>de notre<br> école</h2>
                      <p>Fondée en 2010, notre école accueille les enfants de 2 à 11 ans dans un cadre bienveillant et stimulant. Notre approche pédagogique unique combine les meilleures méthodes éducatives avec une attention particulière portée au bien-être et à l'épanouissement de chaque enfant.
                      </p>
                      <div class="link_btn">
@@ -300,7 +305,7 @@
       </div>
       <!-- end skating -->
       <!-- shop -->
-      <div class="shop">
+      <div class="shop" id="inscription">
          <div class="container-fluid">
             <div class="row d_flex d_grid">
                <div class="col-md-7">
@@ -461,9 +466,9 @@
                         <h3>Liens utiles</h3>
                         <ul class="fullink">
                            <li><a href="index.html">Accueil</a></li>
-                           <li><a href="about.html">À propos</a></li>
-                           <li><a href="programmes.html">Programmes</a></li>
-                           <li><a href="inscription.html">Inscription</a></li>
+                           <li><a href="#about">À propos</a></li>
+                           <li><a href="#programmes">Programmes</a></li>
+                           <li><a href="#inscription">Inscription</a></li>
                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                      </div>
