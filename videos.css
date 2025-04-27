@@ -1,0 +1,20 @@
+/* === Custom Properties === */
+:root {
+    --primary: #2F80ED;
+    /* Keep all other CSS variables and styles from original video.html */
+    /* ... */
+}
+
+/* === Base Styles === */
+* {
+    margin: 0;
+    /* ... (paste all CSS styles here) ... */
+}
+
+/* === Responsive Design === */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    /* ... (remaining responsive styles) ... */
+}
