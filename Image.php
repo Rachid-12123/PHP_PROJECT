@@ -314,7 +314,7 @@ $images = $imageManager->getAllImages();
                   <div class="full">
                      <div class="center-desk">
                         <div class="logo">
-                           <a href="index.html"><h1 style="font-size: 24px;color: #2b2b2b;margin: 0;">KIDS PLACE</h1></a>
+                           <a href="index.php"><h1 style="font-size: 24px;color: #2b2b2b;margin: 0;">KIDS PLACE</h1></a>
                         </div>
                      </div>
                   </div>
