@@ -59,9 +59,327 @@ function getYouTubeId($url) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>spacekids - Video Management</title>
+    <title>Kids Space - Video Learning Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="videos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+    /* Base Styles */
+    :root {
+      --primary: #FF6B6B;
+      --secondary: #4ECDC4;
+      --accent: #FFE66D;
+      --dark: #292F36;
+      --light: #F7FFF7;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Comic Neue', cursive;
+      background-color: #F0F8FF;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    .manager-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 1.5rem 0;
+      border-bottom: 4px dashed var(--accent);
+      margin-bottom: 2rem;
+    }
+    
+    .manager-title {
+      font-family: 'Fredoka One', cursive;
+      color: white;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 0 var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .manager-subtitle {
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+      font-family: 'Fredoka One', cursive;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+      background-color: #FFD166;
+    }
+    
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+    }
+    
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* Video Cards */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+    
+    .video-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border: 3px solid white;
+    }
+    
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      border-color: var(--accent);
+    }
+    
+    .card-thumbnail {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+      overflow: hidden;
+    }
+    
+    .card-thumbnail iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: var(--primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .card-duration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    .card-content {
+      padding: 1rem;
+    }
+    
+    .card-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    
+    .edit-btn {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #FF6B6B;
+      color: white;
+    }
+    
+    /* Modal */
+    .crud-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-family: 'Comic Neue', cursive;
+    }
+    
+    .form-control:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      background-color: white;
+      font-family: 'Comic Neue', cursive;
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 1.5rem;
+    }
+    
+    /* Status Messages */
+    .status-message {
+      padding: 15px;
+      margin: 1rem auto;
+      max-width: 800px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.5s ease;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .success-message {
+      background-color: #D4EDDA;
+      color: #155724;
+      border-left: 5px solid #28A745;
+    }
+    
+    .error-message {
+      background-color: #F8D7DA;
+      color: #721C24;
+      border-left: 5px solid #DC3545;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .manager-title {
+        font-size: 2rem;
+      }
+      
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    </style>
 </head>
 <body>
     <!-- Status Messages -->
@@ -81,8 +399,8 @@ function getYouTubeId($url) {
     <header class="manager-header">
         <div class="container">
             <div class="header-content">
-                <h1 class="manager-title">Educational Video Library</h1>
-                <p class="manager-subtitle">Manage and organize educational content for young learners</p>
+                <h1 class="manager-title">Kids Space Video Hub</h1>
+                <p class="manager-subtitle">Fun educational videos for young explorers!</p>
                 <button class="btn-primary btn-icon" id="addVideo">
                     <i class="fas fa-plus"></i> Add New Video
                 </button>
@@ -94,7 +412,7 @@ function getYouTubeId($url) {
     <section class="video-grid-section">
         <div class="container">
             <div class="grid-header">
-                <h2 class="section-title">Current Videos</h2>
+                <h2 class="section-title">Our Learning Videos</h2>
                 <div class="action-buttons">
                     <button class="btn-primary btn-icon" id="filterAll">
                         <i class="fas fa-filter"></i> All Categories
@@ -131,7 +449,7 @@ function getYouTubeId($url) {
                             </button>
                             <form method="POST" style="display:inline;">
                                 <input type="hidden" name="delete_id" value="<?= $video['id'] ?>">
-                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Are you sure?')">
+                                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this fun video?')">
                                     <i class="fas fa-trash"></i> Delete
                                 </button>
                             </form>
@@ -159,11 +477,13 @@ function getYouTubeId($url) {
                     </div>
                     <div class="form-group">
                         <label class="form-label">Category</label>
-                        <select class="form-control form-select" id="videoCategory" name="category" required>
+                        <select class="form-select" id="videoCategory" name="category" required>
                             <option value="math">Mathematics</option>
                             <option value="science">Science</option>
                             <option value="reading">Reading</option>
                             <option value="history">History</option>
+                            <option value="art">Art & Creativity</option>
+                            <option value="music">Music & Dance</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -178,7 +498,7 @@ function getYouTubeId($url) {
                     <div class="form-group">
                         <label class="form-label">Age Group</label>
                         <input type="text" class="form-control" id="videoAge" name="age" 
-                               placeholder="3-5" required>
+                               placeholder="3-5, 6-8, etc." required>
                     </div>
                 </div>
                 <div class="modal-footer">
